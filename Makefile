@@ -11,3 +11,6 @@ test: all
 bitcode: test.cpp
 	$(CXX) -S -emit-llvm -flto -fcfi=fptr-full test.cpp -o test-fcfi.ll
 	$(CXX) -S -emit-llvm test.cpp -o test.ll
+
+clean:
+	rm a.out *.ll
