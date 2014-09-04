@@ -1,5 +1,5 @@
 #CXX=~/sunblaze-ucb/build/bin/clang++
-CXX=~/data-integrity/debug/bin/clang++
+CXX=~/data-integrity/build/bin/clang++
 
 all: test.cpp
 	$(CXX) -flto -fcfi=fptr-full test.cpp
