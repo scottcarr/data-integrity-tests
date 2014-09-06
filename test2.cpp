@@ -10,6 +10,10 @@ class Circle {
 
 __attribute__((annotate("sensitive"))) Circle *s;
 
+void foo() {
+    cout << s->Code << endl;
+}
+
 int main() {
     s = new Circle(42);
     cout << s->Code << endl;
