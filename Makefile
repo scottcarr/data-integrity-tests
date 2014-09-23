@@ -9,7 +9,7 @@ all: $(SRC)
 test: all
 	./a.out
 	
-bitcode: test.cpp
+bitcode: $(SRC)
 	$(CXX) -S -emit-llvm -flto -fcfi=fptr-full $(SRC) -o test-fcfi.ll
 	$(CXX) -S -emit-llvm  $(SRC) -o test.ll
 
