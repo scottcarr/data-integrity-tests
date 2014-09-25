@@ -8,10 +8,14 @@ struct Key {
 __attribute__((annotate("sensitive"))) struct Key mykey;
 //struct Key mykey;
 
+void foo() {
+  std::cout << mykey.val;
+}
+
 int main() {
-  int i;;
+  int i;
   std::cin >> i;
   mykey.val = i;
-  std::cout << mykey.val;
+  foo();
   return 0;
 }
