@@ -1,4 +1,6 @@
-CXX=~/data-integrity/build/bin/clang++
-SRC=test5.cpp
+BASE=~/data-integrity/build
+LIB=$BASE/lib/LLVMDataIntegrity.so
+OPT=$BASE/bin/opt
 
-gdb --args $CXX $SRC
+#gdb -ex=run --args $OPT -load $LIB -DataIntegrityPass test.ll 
+gdb $OPT -x gdbinit
