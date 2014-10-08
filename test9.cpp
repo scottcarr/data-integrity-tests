@@ -23,7 +23,8 @@ void foo() {
 
 int main() {
   Key *k = (Key*)malloc(sizeof(Key)*3);
-  cout << "k's value is: " << k << endl;
+  cout << "k's addr is: " << &k << endl;
+  //cout << "k's value is: " << v << endl;
   for (int i = 0; i < 3; i++) {
     int j;
     cin >> j;

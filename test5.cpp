@@ -9,7 +9,7 @@ __attribute__((annotate("sensitive"))) struct Key mykey;
 //struct Key mykey;
 
 void foo() {
-  std::cout << mykey.val;
+  std::cout << mykey.val << std::endl;
 }
 
 int main() {
