@@ -13,7 +13,7 @@ __attribute__((annotate("sensitive"))) Key mykey;
 Key *keys;
 
 void foo() {
-  cout << "keys value is: " << keys << endl;
+  //cout << "keys value is: " << keys << endl;
   for (int i = 0; i < 3; i++) {
     //cout << (*keys)[i].val << endl; 
     int k = keys[i].val;
@@ -23,7 +23,7 @@ void foo() {
 
 int main() {
   Key *k = (Key*)malloc(sizeof(Key)*3);
-  cout << "k's addr is: " << &k << endl;
+  //cout << "k's addr is: " << &k << endl;
   //cout << "k's value is: " << v << endl;
   for (int i = 0; i < 3; i++) {
     int j;

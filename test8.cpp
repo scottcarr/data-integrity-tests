@@ -9,7 +9,7 @@ __attribute__((annotate("sensitive"))) Key mykey;
 Key *keyPtr;
 
 void foo() {
-  std::cout << keyPtr->val;
+  std::cout << keyPtr->val << std::endl;
 }
 
 int main() {
