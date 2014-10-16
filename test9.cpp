@@ -3,8 +3,10 @@
 
 using namespace std;
 
+const int N = 3;
+
 typedef struct {
-  int val;
+  long int val;
 } Key;
 
 
@@ -14,7 +16,7 @@ Key *keys;
 
 void foo() {
   //cout << "keys value is: " << keys << endl;
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < N; i++) {
     //cout << (*keys)[i].val << endl; 
     int k = keys[i].val;
     cout << k << endl; 
@@ -22,10 +24,11 @@ void foo() {
 }
 
 int main() {
-  Key *k = (Key*)malloc(sizeof(Key)*3);
+  Key *k = (Key*)malloc(sizeof(Key)*N);
+  //cout << "keys addr is: " << &keys << endl;
   //cout << "k's addr is: " << &k << endl;
   //cout << "k's value is: " << v << endl;
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < N; i++) {
     int j;
     cin >> j;
     k[i].val = j;

@@ -1,6 +1,6 @@
 #CXX=~/sunblaze-ucb/build/bin/clang++
 CXX=~/data-integrity/build/bin/clang++
-SRC=test6.cpp
+SRC=test9.cpp
 
 all: $(SRC)
 	$(CXX) -g -flto -fcpi  $(SRC)
