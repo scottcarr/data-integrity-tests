@@ -64,3 +64,17 @@ if expected != stdout_dat:
     die("test9", expected, stdout_dat)
 else:
     print "test 9 passed."
+
+# test 10
+in_data = "2\n27\n33\n"
+expected = "should never get here"
+p = Popen(["./test10"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat.find(expected) != -1:
+    print "Test 10 failed !!"
+    print 'we should have never seen "{0}"'.format(expected)
+    print "because an out-of-bounds read came before that"
+    exit()
+else:
+    print "test 10 passed."

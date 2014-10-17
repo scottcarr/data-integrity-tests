@@ -4,7 +4,7 @@
 using namespace std;
 
 typedef struct {
-  int val;
+  long int val;
 } Key;
 
 
@@ -19,6 +19,7 @@ void foo() {
     int k = keys[i].val;
     cout << k << endl; 
   }
+  cout << "should never get here\n";
 }
 
 int main() {
