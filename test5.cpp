@@ -4,12 +4,17 @@ struct Key {
   int val;
 } Key;
 
+// !! THIS ISNT ACTUALLY A GOOD TEST
+// EVERYTIME ITS INLINING FOO
+// SO ITS NOT ACTUALLY PROTECTING THE VALUE
 
 __attribute__((annotate("sensitive"))) struct Key mykey;
 //struct Key mykey;
 
 void foo() {
-  std::cout << mykey.val << std::endl;
+  int j;
+  j = mykey.val;
+  std::cout << j << std::endl;
 }
 
 int main() {

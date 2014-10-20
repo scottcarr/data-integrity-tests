@@ -78,3 +78,28 @@ if stdout_dat.find(expected) != -1:
     exit()
 else:
     print "test 10 passed."
+
+# test 11
+in_data = "42\n"
+expected = "42\n"
+p = Popen(["./test11"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if expected != stdout_dat:
+    die("test11", expected, stdout_dat)
+else:
+    print "test 11 passed."
+
+# test 12
+in_data = "42\n9999\n1234\n4321\n"
+expected = "should never get here"
+p = Popen(["./test12"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat.find(expected) != -1:
+    print "Test 12 failed !!"
+    print 'we should have never seen "{0}"'.format(expected)
+    print "because an out-of-bounds store came before that"
+    exit()
+else:
+    print "test 12 passed."
