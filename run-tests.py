@@ -103,3 +103,14 @@ if stdout_dat.find(expected) != -1:
     exit()
 else:
     print "test 12 passed."
+
+# test 15
+in_data = "42\n9999\n1234\n4321\n555\n"
+expected = "42\n9999\n1234\n4321\n555\n"
+p = Popen(["./test15"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat != expected:
+    die("test15", expected, stdout_dat)
+else:
+    print "test 15 passed."
