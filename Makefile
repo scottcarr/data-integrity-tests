@@ -1,6 +1,6 @@
 #CXX=~/sunblaze-ucb/build/bin/clang++
 CXX=~/data-integrity/build/bin/clang++
-SRC=test16.cpp
+SRC=test17.cpp
 
 all: $(SRC)
 	$(CXX) $(SRC) -o normal
