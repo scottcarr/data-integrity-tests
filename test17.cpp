@@ -9,6 +9,7 @@ struct Circle {
 };
 
 __attribute__((annotate("sensitive"))) struct Circle* c;
+//__attribute__((annotate("sensitive"))) char* c;
 
 void foo() {
   cout << c->x << endl;
@@ -26,6 +27,14 @@ int main() {
   cin >> i;
   c->z = i;
   foo();
+  //c = new char[3];
+  //cin >> i;
+  //c[0] = i;
+  //cin >> i;
+  //c[1] = i;
+  //cin >> i;
+  //c[2] = i;
+
   return 0;
 
 }
