@@ -136,3 +136,25 @@ if stdout_dat != expected:
     die("test18", expected, stdout_dat)
 else:
     print "test 18 passed."
+
+# test 19
+in_data = "a\nb\nc\n"
+expected = "a\nb\nc\n"
+p = Popen(["./test19"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat != expected:
+    die("test19", expected, stdout_dat)
+else:
+    print "test 19 passed."
+
+# test 20
+in_data = "a\nb\nc\n"
+expected = "a\nb\nc\n"
+p = Popen(["./test20"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat != expected:
+    die("test20", expected, stdout_dat)
+else:
+    print "test 20 passed."

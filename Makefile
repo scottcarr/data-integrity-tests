@@ -1,6 +1,6 @@
 #CXX=~/sunblaze-ucb/build/bin/clang++
 CXX=~/data-integrity/build/bin/clang++
-SRC=test18.cpp
+SRC=test20.cpp
 
 all: $(SRC)
 	$(CXX) $(SRC) -o normal
@@ -11,7 +11,8 @@ clean:
 	rm a.out *.ll test5 test6 test7 test8 test9 test10 test11 normal
 
 tests: test5.cpp test6.cpp test7.cpp test8.cpp test9.cpp test10.cpp \
-	test11.cpp test12.cpp test13.cpp test14.cpp test15.cpp
+	test11.cpp test12.cpp test13.cpp test14.cpp test15.cpp \
+	test16.cpp test17.cpp test18.cpp test19.cpp test20.cpp 
 	$(CXX) -g -flto -fcpi test5.cpp -o test5
 	$(CXX) -g -flto -fcpi test6.cpp -o test6
 	$(CXX) -g -flto -fcpi test7.cpp -o test7
@@ -26,6 +27,8 @@ tests: test5.cpp test6.cpp test7.cpp test8.cpp test9.cpp test10.cpp \
 	$(CXX) -g -flto -fcpi test16.cpp -o test16
 	$(CXX) -g -flto -fcpi test17.cpp -o test17
 	$(CXX) -g -flto -fcpi test18.cpp -o test18
+	$(CXX) -g -flto -fcpi test19.cpp -o test19
+	$(CXX) -g -flto -fcpi test20.cpp -o test20
 
 run-tests: tests run-tests.py
 	python run-tests.py
