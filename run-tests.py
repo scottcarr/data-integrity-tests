@@ -158,3 +158,14 @@ if stdout_dat != expected:
     die("test20", expected, stdout_dat)
 else:
     print "test 20 passed."
+
+# test 21
+expected = "c\nc\nc\n"
+p = Popen(["./test21"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate()[0]
+
+if stdout_dat != expected:
+    die("test21", expected, stdout_dat)
+else:
+    print "test 21 passed."
+
