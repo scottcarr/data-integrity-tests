@@ -27,7 +27,7 @@ int main() {
   Key *k = (Key*)malloc(sizeof(Key)*N);
   //cout << "keys addr is: " << &keys << endl;
   //cout << "k's addr is: " << &k << endl;
-  //cout << "k's value is: " << v << endl;
+  //cout << "k's value is: " << k << endl;
   for (int i = 0; i < N; i++) {
     int j;
     cin >> j;

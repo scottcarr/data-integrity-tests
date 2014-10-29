@@ -115,18 +115,6 @@ if stdout_dat != expected:
 else:
     print "test 15 passed."
 
-<<<<<<< HEAD
-# sec_test
-in_data = "42\n9999\n1234\n4321\n555\n"
-expected = "42\n9999\n1234\n4321\n555\n"
-p = Popen(["./sec_test"], stdout=PIPE, stdin=PIPE)
-stdout_dat = p.communicate(input=in_data)[0]
-
-if stdout_dat != expected:
-    die("sec_test", expected, stdout_dat)
-else:
-    print "sec_test passed."
-=======
 # test 17
 in_data = "a\nb\nc\n"
 expected = "a\nb\nc\n"
@@ -181,4 +169,13 @@ if stdout_dat != expected:
 else:
     print "test 21 passed."
 
->>>>>>> 69172e33746ec7d788485f711a52a9dca8ad445a
+# sec_test
+in_data = "42\n9999\n1234\n4321\n555\n"
+expected = "42\n9999\n1234\n4321\n555\n"
+p = Popen(["./sec_test"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat != expected:
+    die("sec_test", expected, stdout_dat)
+else:
+    print "sec_test passed."
