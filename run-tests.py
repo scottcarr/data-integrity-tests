@@ -193,6 +193,32 @@ if stdout_dat.find(expected) != -1:
     exit()
 else:
     print "test 23 passed."
+    
+# test 24 
+expected = "should never get here"
+p = Popen(["./test24"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate()[0]
+
+if stdout_dat.find(expected) != -1:
+    print "Test 24 failed !!"
+    print 'we should have never seen "{0}"'.format(expected)
+    print "because an out-of-bounds read came before that"
+    exit()
+else:
+    print "test 24 passed."
+
+# test 25 
+expected = "should never get here"
+p = Popen(["./test25"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate()[0]
+
+if stdout_dat.find(expected) != -1:
+    print "Test 25 failed !!"
+    print 'we should have never seen "{0}"'.format(expected)
+    print "because an out-of-bounds read came before that"
+    exit()
+else:
+    print "test 25 passed."
 
 # sec_test
 #in_data = "42\n9999\n1234\n4321\n555\n"

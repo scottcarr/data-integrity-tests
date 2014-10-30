@@ -1,5 +1,5 @@
 CXX=~/data-integrity/build/bin/clang++
-SRC=test23.cpp
+SRC=test20.cpp
 
 all: $(SRC)
 	$(CXX) $(SRC) -o normal
@@ -19,7 +19,7 @@ sec_tests: sec_test.cpp sec_test1.cpp sec_test2.cpp
 tests: test5.cpp test6.cpp test7.cpp test8.cpp test9.cpp test10.cpp \
 	test11.cpp test12.cpp test13.cpp test14.cpp test15.cpp \
 	test16.cpp test17.cpp test18.cpp test19.cpp test20.cpp \
-	test21.cpp 
+	test21.cpp test22.cpp test23.cpp test24.cpp test25.cpp
 	$(CXX) -g -flto -fcpi test5.cpp -o test5
 	$(CXX) -g -flto -fcpi test6.cpp -o test6
 	$(CXX) -g -flto -fcpi test7.cpp -o test7
@@ -39,6 +39,8 @@ tests: test5.cpp test6.cpp test7.cpp test8.cpp test9.cpp test10.cpp \
 	$(CXX) -g -flto -fcpi test21.cpp -o test21
 	$(CXX) -g -flto -fcpi test22.cpp -o test22
 	$(CXX) -g -flto -fcpi test23.cpp -o test23
+	$(CXX) -g -flto -fcpi test24.cpp -o test24
+	$(CXX) -g -flto -fcpi test25.cpp -o test25
 	#$(CXX) -g -flto -fcpi sec_test.cpp -o sec_test
 	#$(CXX) -g -flto -fcpi sec_test1.cpp -o sec_test1
 	#$(CXX) -g -flto -fcpi sec_test2.cpp -o sec_test2
