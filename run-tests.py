@@ -169,6 +169,31 @@ if stdout_dat != expected:
 else:
     print "test 21 passed."
 
+# test 22
+in_data = "a\nb\nc\n"
+expected = "a\nb\nc\n"
+p = Popen(["./test22"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat != expected:
+    die("test22", expected, stdout_dat)
+else:
+    print "test 22 passed."
+
+# test 23 
+in_data = "2\n27\n33\n999999\n"
+expected = "should never get here"
+p = Popen(["./test23"], stdout=PIPE, stdin=PIPE)
+stdout_dat = p.communicate(input=in_data)[0]
+
+if stdout_dat.find(expected) != -1:
+    print "Test 23 failed !!"
+    print 'we should have never seen "{0}"'.format(expected)
+    print "because an out-of-bounds read came before that"
+    exit()
+else:
+    print "test 23 passed."
+
 # sec_test
 #in_data = "42\n9999\n1234\n4321\n555\n"
 #expected = "42\n9999\n1234\n4321\n555\n"

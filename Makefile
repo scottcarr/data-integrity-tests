@@ -1,5 +1,5 @@
 CXX=~/data-integrity/build/bin/clang++
-SRC=test21.cpp
+SRC=test23.cpp
 
 all: $(SRC)
 	$(CXX) $(SRC) -o normal
@@ -37,9 +37,11 @@ tests: test5.cpp test6.cpp test7.cpp test8.cpp test9.cpp test10.cpp \
 	$(CXX) -g -flto -fcpi test19.cpp -o test19
 	$(CXX) -g -flto -fcpi test20.cpp -o test20
 	$(CXX) -g -flto -fcpi test21.cpp -o test21
-	$(CXX) -g -flto -fcpi sec_test.cpp -o sec_test
-	$(CXX) -g -flto -fcpi sec_test1.cpp -o sec_test1
-	$(CXX) -g -flto -fcpi sec_test2.cpp -o sec_test2
+	$(CXX) -g -flto -fcpi test22.cpp -o test22
+	$(CXX) -g -flto -fcpi test23.cpp -o test23
+	#$(CXX) -g -flto -fcpi sec_test.cpp -o sec_test
+	#$(CXX) -g -flto -fcpi sec_test1.cpp -o sec_test1
+	#$(CXX) -g -flto -fcpi sec_test2.cpp -o sec_test2
 
 run-tests: tests run-tests.py
 	python run-tests.py
