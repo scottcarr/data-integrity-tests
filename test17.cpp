@@ -12,9 +12,13 @@ __attribute__((annotate("sensitive"))) struct Circle* c;
 //__attribute__((annotate("sensitive"))) char* c;
 
 void foo() {
-  cout << c->x << endl;
-  cout << c->y << endl;
-  cout << c->z << endl;
+  char a;
+  a = c->x;
+  cout << a << endl;
+  a = c->y;
+  cout << a << endl;
+  a = c->z;
+  cout << a << endl;
 }
 
 int main() {

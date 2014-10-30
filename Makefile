@@ -1,5 +1,5 @@
 CXX=~/data-integrity/build/bin/clang++
-SRC=test19.cpp
+SRC=test21.cpp
 
 all: $(SRC)
 	$(CXX) $(SRC) -o normal
