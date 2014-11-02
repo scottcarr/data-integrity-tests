@@ -18,6 +18,8 @@ typedef struct {
 //__attribute__((annotate("sensitive"))) SecretThing mykey;
 
 __attribute__((annotate("sensitive"))) SecretInt keys[3];
+__attribute__((annotate("sensitive"))) SecretInt abc;
+__attribute__((annotate("sensitive"))) int xyz;
 
 //SecretInt keys[3];
 

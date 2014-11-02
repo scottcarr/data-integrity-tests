@@ -11,6 +11,8 @@ typedef struct {
 
 
 __attribute__((annotate("sensitive"))) Key mykey;
+__attribute__((annotate("sensitive"))) Key *asdf;
+__attribute__((annotate("sensitive"))) long int xzy;
 //Key *keyPtr;
 Key *keys;
 

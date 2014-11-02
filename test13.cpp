@@ -8,6 +8,8 @@ struct Buffer {
 
 Buffer *mybuf;
 __attribute__((annotate("secret"))) Buffer s;
+__attribute__((annotate("secret"))) Buffer *ps;
+__attribute__((annotate("secret"))) long int asdf;
 
 const int N = 5;
 
@@ -18,4 +20,5 @@ int main() {
     cin >> j;
     mybuf[i].val = j;
   }
+  cout << "should never get here\n";
 }

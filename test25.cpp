@@ -5,6 +5,7 @@ using namespace std;
 
 //__attribute__((annotate("sensitive"))) struct Circle* c;
 __attribute__((annotate("sensitive"))) char* c;
+__attribute__((annotate("sensitive"))) char cx;
 
 const int N = 3;
 

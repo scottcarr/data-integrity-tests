@@ -2,6 +2,7 @@
 using namespace std;
 
 __attribute__((annotate("secret"))) char *buf;
+__attribute__((annotate("secret"))) char bufx;
 //char *buf;
 const int N = 3;
 

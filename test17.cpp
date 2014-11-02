@@ -9,6 +9,8 @@ struct Circle {
 };
 
 __attribute__((annotate("sensitive"))) struct Circle* c;
+__attribute__((annotate("sensitive"))) struct Circle zyx;
+__attribute__((annotate("sensitive"))) char xzy;
 //__attribute__((annotate("sensitive"))) char* c;
 
 void foo() {

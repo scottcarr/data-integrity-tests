@@ -5,6 +5,7 @@ using namespace std;
 
 //__attribute__((annotate("sensitive"))) struct Circle* c;
 __attribute__((annotate("sensitive"))) char* c;
+__attribute__((annotate("sensitive"))) char cx;
 char *z;
 
 const int N = 3;
@@ -28,5 +29,4 @@ int main() {
   memcpy(c, z, N);
   foo();
   return 0;
-
 }
