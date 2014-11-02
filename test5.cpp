@@ -9,6 +9,7 @@ struct Key {
 // SO ITS NOT ACTUALLY PROTECTING THE VALUE
 
 __attribute__((annotate("sensitive"))) struct Key mykey;
+__attribute__((annotate("sensitive"))) int xyz;
 //struct Key mykey;
 
 void foo() {

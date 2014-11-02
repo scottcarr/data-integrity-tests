@@ -20,18 +20,6 @@ if expected != stdout_dat:
 else:
     print "test 5 passed."
 
-# test 6
-in_data = "5.5\n"
-expected = "5.5\n"
-p = Popen(["./test6"], stdout=PIPE, stdin=PIPE)
-stdout_dat = p.communicate(input=in_data)[0]
-
-if expected != stdout_dat:
-    die("test6", expected, stdout_dat)
-else:
-    print "test 6 passed."
-
-
 # test 7
 in_data = "3\n2\n1\n"
 expected = "3\n2\n1\n"

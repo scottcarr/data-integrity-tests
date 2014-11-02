@@ -2,6 +2,8 @@
 using namespace std;
 
 __attribute__((annotate("sensitive"))) char* buf;
+__attribute__((annotate("sensitive"))) char x;
+
 const int N = 3;
 
 int main() {
