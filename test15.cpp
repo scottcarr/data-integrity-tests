@@ -1,13 +1,14 @@
 #include <iostream>
 using namespace std;
 
+__attribute__((annotate("sensitive"))) long int x;
 __attribute__((annotate("sensitive"))) long int* buf;
 //char* buf;
 const int N = 5;
 
 void foo() {
   for (int i = 0; i < N; ++i) {
-    int j;
+    long int j;
     j = buf[i];
     cout << j << "\n";
   }
@@ -16,7 +17,7 @@ void foo() {
 int main() {
   buf = new long int[N];
   for (int i = 0; i < N; ++i) {
-    int j;
+    long int j;
     cin >> j;
     buf[i] = j;
   }

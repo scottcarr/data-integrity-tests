@@ -6,16 +6,16 @@ using namespace std;
 
 __attribute__((annotate("secret"))) char *c;
 
-const int N = 3;
+const int N = 10;
 
 
 int main() {
   c = new char[N];
   memset(c, 'c', N+1);
   cout << "should never get here\n";
-  //for (int i = 0; i < N+1; ++i) {
-  //  char j;
-  //  j = c[i];
-  //  cout << j << endl;
-  //}
+  for (int i = 0; i < N+1; ++i) {
+    char j;
+    j = c[i];
+    cout << j << endl;
+  }
 }

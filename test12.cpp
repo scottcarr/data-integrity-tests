@@ -9,7 +9,9 @@ typedef struct {
 
 const int N = 3;
 
-__attribute__((annotate("sensitive"))) Key mykey;
+__attribute__((annotate("sensitive"))) Key *mykey;
+__attribute__((annotate("sensitive"))) long int y;
+
 Key *ptr;
 
 int main() {
