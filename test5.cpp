@@ -1,4 +1,5 @@
 #include <iostream>
+#include "safe_functions.h"
 
 struct Key {
   int val;
@@ -13,15 +14,12 @@ __attribute__((annotate("sensitive"))) int xyz;
 //struct Key mykey;
 
 void foo() {
-  int j;
-  j = mykey.val;
-  std::cout << j << std::endl;
+  safe_putchar((char*)mykey.val);
+  putchar('\n');
 }
 
 int main() {
-  int i;
-  std::cin >> i;
-  mykey.val = i;
+  safe_getchar((char*) &mykey.val);
   foo();
   return 0;
 }

@@ -1,10 +1,10 @@
 CXX=~/data-integrity/build/bin/clang++
-SRC=test31.cpp
-CFLAG=-g -fcpi -flto
+SRC=test5.cpp
+CFLAG=-g -fcps -flto
 
 all: $(SRC)
-	$(CXX) $(SRC) -o normal
-	$(CXX) -S -emit-llvm  $(SRC) -o normal.ll
+	$(CXX) -g $(SRC) -o normal
+	$(CXX) -g -S -emit-llvm  $(SRC) -o normal.ll
 	$(CXX) $(CFLAG)  $(SRC)
 
 clean:

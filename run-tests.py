@@ -32,8 +32,8 @@ else:
     print "test 7 passed."
 
 # test 9
-in_data = "2\n27\n33\n"
-expected = "2\n27\n33\n"
+in_data = "abc"
+expected = "abc\n"
 p = Popen(["./test9"], stdout=PIPE, stdin=PIPE)
 stdout_dat = p.communicate(input=in_data)[0]
 
