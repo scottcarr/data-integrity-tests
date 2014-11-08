@@ -1,4 +1,5 @@
 #include <iostream>
+#include "safe_functions.h"
 
 using namespace std;
 
@@ -16,9 +17,7 @@ const int N = 5;
 int main() {
   mybuf = new Buffer [N];
   for (int i = 0; i < N + 1 /* off by one*/; i++) {
-    int j;
-    cin >> j;
-    mybuf[i].val = j;
+    safe_getchar((char*) &(mybuf[i].val));
   }
   cout << "should never get here\n";
 }

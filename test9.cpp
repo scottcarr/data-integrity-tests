@@ -24,9 +24,9 @@ void foo() {
     //cout << (*keys)[i].val << endl; 
     //int k = keys[i].val;
     //cout << k << endl; 
-    safe_putchar((char*)keys[i].val);
-    putchar('\n');
+    safe_putchar((char*)&(keys[i].val));
   }
+  putchar('\n');
 }
 
 Key *k;

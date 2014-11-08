@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include "safe_functions.h"
 
 using namespace std;
 
@@ -19,8 +20,8 @@ int main() {
   ptr = (Key*)malloc(sizeof(Key)*N);
   int j;
   for(int i = 0; i < N+1; ++i) {
-    cin >> j;
-    ptr[i].val = j;
+    //cin >> j;
+    safe_getchar((char *)&(ptr[i].val));
   }
   cout << "should never get here\n";
   return 0;

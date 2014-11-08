@@ -10,7 +10,7 @@ def die(test, expected, actual):
     exit()
 
 # test 5
-in_data = "5\n"
+in_data = "5"
 expected = "5\n"
 p = Popen(["./test5"], stdout=PIPE, stdin=PIPE)
 stdout_dat = p.communicate(input=in_data)[0]

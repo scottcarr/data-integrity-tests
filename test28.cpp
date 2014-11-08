@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include "safe_functions.h"
 using namespace std;
 // test too big memcpy 
 // this should work because the memcpy cant be replaced
@@ -17,19 +18,21 @@ __attribute__((annotate("sensitive"))) char cx;
 
 const int N = 10;
 
-void safe_read(Circle *circle) {
+void circle_read(Circle *circle) {
   for (int i = 0; i < N; i++) {
-    char j;
-    cin >> j;
-    circle->c[i] = j;
+    //char j;
+    //cin >> j;
+    //circle->c[i] = j;
+    safe_getchar(circle->c + i);
   }
 }
 
 void foo() {
   for (int i = 0; i < N; i++) {
-    char j;
-    j =  zptr->c[i];
-    cout << j << endl;
+    //char j;
+    //j =  zptr->c[i];
+    //cout << j << endl;
+    safe_putchar(zptr->c + i);
   }
 }
 
@@ -38,7 +41,7 @@ int main() {
   zptr = new Circle();
   cptr->c = new char[N];
   zptr->c = new char[N];
-  safe_read(zptr);
+  circle_read(zptr);
   //c = new char[N];
   // if z is a global variable then this test is fine !?
   //char *z = new char[N];

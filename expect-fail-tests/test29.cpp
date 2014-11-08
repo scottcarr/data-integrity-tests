@@ -5,12 +5,13 @@ using namespace std;
 
 // we want to be able to protect structs like this:
 struct Circle {
+  Circle() {}
   char *name;
   int x;
   int y;
 };
 
-__attribute__((annotate("secret"))) Circle *c1, *c2;
+__attribute__((annotate("secret"))) Circle *c;
 __attribute__((annotate("secret"))) Circle yz;
 __attribute__((annotate("secret"))) int z;
 __attribute__((annotate("secret"))) char* zsdf;
@@ -22,31 +23,32 @@ const int N = 100;
 void foo(Circle *c) {
   for (int i = 0; i < N; ++i) {
     if (c->name[i] == '\0') { break; }
-    //char x;
-    //x = c->name[i];
-    //cout << x;
-    safe_putchar(c->name + i);
+    char x;
+    x = c->name[i];
+    cout << x;
+  }
+  cout << endl;
+}
+
+void safe_strcpy(Circle *dst, const char* src){
+  for (int i = 0; i < N; ++i) {
+    c->name[i] = src[i];
+    if (src[i] == '\0') { break; }
   }
 }
 
-
 int main() {
-  c1 = new Circle();
-  c2 = new Circle();
-  c1->name = new char[N];
-  c2->name = new char[N];
+  c = new Circle();
+  c->name = new char[N];
+  char* c2 = new char[N];
+  string s;
+  cin >> s;
 
-  for (int i = 0; i < N-1; ++i) {
-    safe_getchar(c1->name + i);
-    if (c1->name[i] == '\n') {
-      c1->name[i+1] = '\0';
-      break;
-    }
-  }
-
-  strcpy(c2->name, c1->name);
+  safe_strcpy(c, s.c_str());
   
-  foo(c2);
+  foo(c);
+
+  cout << c2 << endl;
 
   return 0;
 }

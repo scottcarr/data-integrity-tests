@@ -14,12 +14,12 @@ __attribute__((annotate("sensitive"))) int xyz;
 //struct Key mykey;
 
 void foo() {
-  safe_putchar((char*)mykey.val);
+  safe_putchar((char*) &(mykey.val));
   putchar('\n');
 }
 
 int main() {
-  safe_getchar((char*) &mykey.val);
+  safe_getchar((char*) &(mykey.val));
   foo();
   return 0;
 }

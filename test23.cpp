@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include "safe_functions.h"
 using namespace std;
 
 struct Circle {
@@ -18,9 +19,10 @@ int main() {
   cptr = new Circle();
   cptr->c = new char[N];
   for (char* ptr = cptr->c, i = 0; i < N + 1; ++i, ++ptr) {
-    char c;
-    cin >> c;
-    *ptr = c;
+    //char c;
+    //cin >> c;
+    //*ptr = c;
+    safe_getchar(ptr);
   }
   cout << "should never get here\n";
   return 0;
