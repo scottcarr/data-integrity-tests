@@ -2,12 +2,15 @@
 # instead use make like:
 # make run-tests
 from subprocess import Popen, PIPE
+import NegativeTests
 
 def die(test, expected, actual): 
     print "Test " + test + " failed"
     print "expected: " + expected
     print "actual: " + actual
     exit()
+
+NegativeTests.run()
 
 # test 5
 in_data = "5"
@@ -21,7 +24,7 @@ else:
     print "test 5 passed."
 
 # test 7
-in_data = "3\n2\n1\n"
+in_data = "321"
 expected = "3\n2\n1\n"
 p = Popen(["./test7"], stdout=PIPE, stdin=PIPE)
 stdout_dat = p.communicate(input=in_data)[0]

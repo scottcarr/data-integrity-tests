@@ -1,5 +1,4 @@
 #include <iostream>
-#include "safe_functions.h"
 
 typedef struct {
   int val;
@@ -27,18 +26,17 @@ __attribute__((annotate("sensitive"))) int xyz;
 
 void foo() {
   for (int i = 0; i < 3; i++) {
-    //int k;
-    //k = keys[i].val;
-    //std::cout << k << std::endl;
-    safe_putchar((char*) &(keys[i].val));
-    std::cout << std::endl;
-
+    int k;
+    k = keys[i].val;
+    std::cout << k << std::endl;
   }
 }
 
 int main() {
   for (int i = 0; i < 3; i++) {
-    safe_getchar((char*) &(keys[i].val));
+    int k;
+    std::cin >> k;
+    keys[i].val = k;
   }
   foo();
   return 0;

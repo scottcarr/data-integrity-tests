@@ -21,13 +21,13 @@ const int N = 3;
 void foo() {
   for (int i = 0; i < N; i++) {
     char j;
-    j =  p1->c[i];
+    j =  p1->buf[i];
     cout << j << endl;
   }
 }
 
 int main() {
-  p1 = new Protected()
+  p1 = new Protected();
   p1->buf = new char[N];
   char *z = new char[N];
   for (int i = 0; i < N; i++) {

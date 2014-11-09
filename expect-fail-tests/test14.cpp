@@ -1,5 +1,4 @@
 #include <iostream>
-#include "safe_functions.h"
 using namespace std;
 
 struct Circle {
@@ -7,6 +6,14 @@ struct Circle {
   long int y;
   double pi;
 };
+
+//struct ProtectedInt {
+//  long int val;
+//};
+//
+//struct ProtectedDouble {
+//  double val;
+//};
 
 struct Circle *c;
 
@@ -17,15 +24,13 @@ __attribute__((annotate("secret"))) long int longdddd;
 
 void foo(bool read) {
   if (read) {
-    //double d;
-    //cin >> d;
-    //c->pi = d;
-    safe_read_double(&(c->pi));
+    double d;
+    cin >> d;
+    c->pi = d;
   } else {
-    //double d;
-    //d = c->pi;
-    safe_write_double(&(c->pi));
-    cout << "\n";
+    double d;
+    d = c->pi;
+    cout << d << "\n";
   }
 }
 int main() {
