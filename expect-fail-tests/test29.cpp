@@ -11,11 +11,11 @@ struct Circle {
   int y;
 };
 
-__attribute__((annotate("secret"))) Circle *c;
-__attribute__((annotate("secret"))) Circle yz;
-__attribute__((annotate("secret"))) int z;
-__attribute__((annotate("secret"))) char* zsdf;
-__attribute__((annotate("secret"))) char df;
+__attribute__((annotate("sensitive"))) Circle *c;
+__attribute__((annotate("sensitive"))) Circle yz;
+__attribute__((annotate("sensitive"))) int z;
+__attribute__((annotate("sensitive"))) char* zsdf;
+__attribute__((annotate("sensitive"))) char df;
 
 
 const int N = 100;

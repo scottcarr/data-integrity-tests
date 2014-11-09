@@ -4,8 +4,8 @@ using namespace std;
 
 // test too big memset
 
-__attribute__((annotate("secret"))) char *c;
-__attribute__((annotate("secret"))) char cx;
+__attribute__((annotate("sensitive"))) char *c;
+__attribute__((annotate("sensitive"))) char cx;
 
 const int N = 3;
 

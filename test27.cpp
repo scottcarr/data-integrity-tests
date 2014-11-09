@@ -9,10 +9,10 @@ struct Circle {
   char *name;
 };
 
-__attribute__((annotate("secret"))) Circle *cptr;
-__attribute__((annotate("secret"))) Circle c;
-__attribute__((annotate("secret"))) char *ch;
-__attribute__((annotate("secret"))) char chx;
+__attribute__((annotate("sensitive"))) Circle *cptr;
+__attribute__((annotate("sensitive"))) Circle c;
+__attribute__((annotate("sensitive"))) char *ch;
+__attribute__((annotate("sensitive"))) char chx;
 
 const int N = 10;
 

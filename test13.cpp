@@ -8,9 +8,9 @@ struct Buffer {
 };
 
 Buffer *mybuf;
-__attribute__((annotate("secret"))) Buffer s;
-__attribute__((annotate("secret"))) Buffer *ps;
-__attribute__((annotate("secret"))) long int asdf;
+__attribute__((annotate("sensitive"))) Buffer s;
+__attribute__((annotate("sensitive"))) Buffer *ps;
+__attribute__((annotate("sensitive"))) long int asdf;
 
 const int N = 5;
 

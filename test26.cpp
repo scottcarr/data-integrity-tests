@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 
-__attribute__((annotate("secret"))) char *buf;
-__attribute__((annotate("secret"))) char bufx;
+__attribute__((annotate("sensitive"))) char *buf;
+__attribute__((annotate("sensitive"))) char bufx;
 //char *buf;
 const int N = 3;
 

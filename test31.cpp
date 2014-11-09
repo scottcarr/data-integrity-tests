@@ -7,10 +7,10 @@ struct Protected {
   char *name;
 };
 
-__attribute__((annotate("secret"))) Protected *pptr;
-__attribute__((annotate("secret"))) Protected pro;
-__attribute__((annotate("secret"))) char *cptr;
-__attribute__((annotate("secret"))) char achar;
+__attribute__((annotate("sensitive"))) Protected *pptr;
+__attribute__((annotate("sensitive"))) Protected pro;
+__attribute__((annotate("sensitive"))) char *cptr;
+__attribute__((annotate("sensitive"))) char achar;
 
 void foo(Protected *p) {
   char *c = p->name;

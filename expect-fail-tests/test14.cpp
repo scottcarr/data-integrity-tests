@@ -17,10 +17,10 @@ struct Circle {
 
 struct Circle *c;
 
-__attribute__((annotate("secret"))) struct Circle s;
-__attribute__((annotate("secret"))) struct Circle *sptr;
-__attribute__((annotate("secret"))) double dddd;
-__attribute__((annotate("secret"))) long int longdddd;
+__attribute__((annotate("sensitive"))) struct Circle s;
+__attribute__((annotate("sensitive"))) struct Circle *sptr;
+__attribute__((annotate("sensitive"))) double dddd;
+__attribute__((annotate("sensitive"))) long int longdddd;
 
 void foo(bool read) {
   if (read) {
