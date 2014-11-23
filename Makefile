@@ -1,6 +1,6 @@
 CXX=~/data-integrity/build/bin/clang++
 SRC=test14.cpp
-CFLAG= -g -fcps 
+CFLAG= -g -fcps -flto
 
 all: $(SRC)
 	$(CXX) -g $(SRC) -o normal
