@@ -24,7 +24,7 @@ void safe_read_double(double* addr) {
 
 __attribute__((noinline)) 
 void safe_write_double(double* addr) {
-  printf("%lf", *addr);
+  printf("%.9f", *addr);
 }
 
 

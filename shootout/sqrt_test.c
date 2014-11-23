@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "../safe_functions.h"
 
 #define pi 3.141592653589793
 #define solar_mass (4 * pi * pi)
@@ -36,7 +37,7 @@ double sqrt5(double m) {
    return x2;
 }  
 
-//__attribute__((noinline))
+__attribute__((noinline))
 void plt_sqrt(struct planet *p) {
    double i=0;
    double x1,x2;
@@ -66,10 +67,13 @@ int main(int argc, char ** argv)
   //for (i = 1; i <= n; i++)
   //  advance(NBODIES, bodies, 0.01);
   //printf ("%.9f\n", energy(NBODIES, bodies));
-  double x = 4;
   struct planet p;
-  p.x = 4;
-  plt_sqrt(&p);
-  printf("%f\n", p.x);
+  struct planet sqrt_p;
+  safe_read_double(&(p.x));
+  sqrt_p.x = p.x;
+  plt_sqrt(&sqrt_p);
+  safe_write_double(&(sqrt_p.x));
+  printf("\n");
+  //printf("%f\n", p.x);
   return 0;
 }

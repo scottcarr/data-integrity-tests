@@ -27,24 +27,23 @@ __attribute__((annotate("sensitive"))) struct planet *prot_planet_ptr;
 // a crazy sqrt implementation I found on the internet so we 
 // don't have to use libc
 // http://www.codeproject.com/Articles/69941/Best-Square-Root-Method-Algorithm-Function-Precisi
-//double sqrt5(double m) {
-//   double i=0;
-//   double x1,x2;
-//   while( (i*i) <= m )
-//          i+=0.1f;
-//   x1=i;
-//   for(int j=0;j<10;j++)
-//   {
-//       x2=m;
-//      x2/=x1;
-//      x2+=x1;
-//      x2/=2;
-//      x1=x2;
-//   }
-//   return x2;
-//}  
-//
-////__attribute__((noinline))
+double sqrt5(double m) {
+   double i=0;
+   double x1,x2;
+   while( (i*i) <= m )
+          i+=0.1f;
+   x1=i;
+   for(int j=0;j<10;j++)
+   {
+       x2=m;
+      x2/=x1;
+      x2+=x1;
+      x2/=2;
+      x1=x2;
+   }
+   return x2;
+}  
+
 void plt_sqrt(struct planet *p) {
    double i=0;
    double x1,x2;
@@ -63,45 +62,48 @@ void plt_sqrt(struct planet *p) {
    p->x = x2;
    //return x2;
 }
-//
-//
-//void advance(int nbodies, struct planet * bodies, double dt)
-//{
-//  int i, j;
-//
-//  for (i = 0; i < nbodies; i++) {
-//    struct planet * b = &(bodies[i]);
-//    for (j = i + 1; j < nbodies; j++) {
-//      struct planet * b2 = &(bodies[j]);
-//      double dx = b->x - b2->x;
-//      double dy = b->y - b2->y;
-//      double dz = b->z - b2->z;
-//#ifdef ORIG
-//      double distance = sqrt5(dx * dx + dy * dy + dz * dz);
-//#else
-//      struct planet tmp;
-//      tmp.x = dx * dx + dy * dy + dz * dz;
-//      plt_sqrt(&tmp);
-//      double distance = tmp.x;
-//#endif
-//      double mag = dt / (distance * distance * distance);
-//      b->vx -= dx * b2->mass * mag;
-//      b->vy -= dy * b2->mass * mag;
-//      b->vz -= dz * b2->mass * mag;
-//      b2->vx += dx * b->mass * mag;
-//      b2->vy += dy * b->mass * mag;
-//      b2->vz += dz * b->mass * mag;
-//    }
-//  }
-//  for (i = 0; i < nbodies; i++) {
-//    struct planet * b = &(bodies[i]);
-//    b->x += dt * b->vx;
-//    b->y += dt * b->vy;
-//    b->z += dt * b->vz;
-//  }
-//}
-//
+
+void advance(int nbodies, struct planet * bodies, double dt)
+{
+  int i, j;
+
+  for (i = 0; i < nbodies; i++) {
+    struct planet * b = &(bodies[i]);
+    for (j = i + 1; j < nbodies; j++) {
+      struct planet * b2 = &(bodies[j]);
+      double dx = b->x - b2->x;
+      double dy = b->y - b2->y;
+      double dz = b->z - b2->z;
+#ifdef ORIG
+      double distance = sqrt5(dx * dx + dy * dy + dz * dz);
+#else
+      struct planet tmp;
+      tmp.x = dx * dx + dy * dy + dz * dz;
+      plt_sqrt(&tmp);
+      double distance = tmp.x;
+#endif
+      double mag = dt / (distance * distance * distance);
+      b->vx -= dx * b2->mass * mag;
+      b->vy -= dy * b2->mass * mag;
+      b->vz -= dz * b2->mass * mag;
+      b2->vx += dx * b->mass * mag;
+      b2->vy += dy * b->mass * mag;
+      b2->vz += dz * b->mass * mag;
+    }
+  }
+  for (i = 0; i < nbodies; i++) {
+    struct planet * b = &(bodies[i]);
+    b->x += dt * b->vx;
+    b->y += dt * b->vy;
+    b->z += dt * b->vz;
+  }
+}
+
+#ifdef ORIG
 double energy(int nbodies, struct planet * bodies)
+#else
+struct planet energy(int nbodies, struct planet * bodies)
+#endif
 {
   double e;
   int i, j;
@@ -126,7 +128,13 @@ double energy(int nbodies, struct planet * bodies)
       e -= (b->mass * b2->mass) / distance;
     }
   }
+#ifdef ORIG
   return e;
+#else
+  struct planet rv;
+  rv.x = e;
+  return rv;
+#endif
 }
 
 void offset_momentum(int nbodies, struct planet * bodies)
@@ -194,7 +202,7 @@ void init_bodies() {
   bodies[0].x     = 0;
   bodies[0].y     = 0;
   bodies[0].z     = 0;
-  bodies[0].vx    = 10.0f;
+  bodies[0].vx    = 0;
   bodies[0].vy    = 0;
   bodies[0].vz    = 0;
   bodies[0].mass  = solar_mass;
@@ -246,17 +254,43 @@ int main(int argc, char ** argv)
 #ifndef ORIG
   init_bodies();
 #endif
-  for (i = 0; i < NBODIES; i++) {
-    safe_write_double(&(bodies[i].vx));
-    printf("\n");
-  }
-  //offset_momentum(NBODIES, bodies);
-  //printf("\n");
-  //printf ("%.9f\n", bodies[0].vx);
-  //printf ("%.9f\n", energy(NBODIES, bodies));
-  //for (i = 1; i <= n; i++)
-  //  advance(NBODIES, bodies, 0.01);
-  //printf ("%.9f\n", energy(NBODIES, bodies));
+
+  offset_momentum(NBODIES, bodies);
+
+  // debugging:
+  //for (i = 0; i < NBODIES; i++) {
+  //  safe_write_double(&(bodies[i].x));
+  //  printf("\n");
+  //  safe_write_double(&(bodies[i].y));
+  //  printf("\n");
+  //  safe_write_double(&(bodies[i].z));
+  //  printf("\n");
+  //  safe_write_double(&(bodies[i].vx));
+  //  printf("\n");
+  //  safe_write_double(&(bodies[i].vy));
+  //  printf("\n");
+  //  safe_write_double(&(bodies[i].vz));
+  //  printf("\n");
+  //  safe_write_double(&(bodies[i].mass));
+  //  printf("\n");
+  //}
+  
+#ifdef ORIG
+  printf ("%.9f\n", energy(NBODIES, bodies));
+#else
+  struct planet tmp = energy(NBODIES, bodies);
+  safe_write_double(&(tmp.x));
+  printf("\n");
+#endif
+  for (i = 1; i <= n; i++)
+    advance(NBODIES, bodies, 0.01);
+#ifdef ORIG
+  printf ("%.9f\n", energy(NBODIES, bodies));
+#else
+  tmp = energy(NBODIES, bodies);
+  safe_write_double(&(tmp.x));
+  printf("\n");
+#endif
   return 0;
 }
 
