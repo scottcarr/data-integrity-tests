@@ -1,6 +1,6 @@
-# working benchmarks: fasta, nbody
+# working benchmarks: fasta, nbody, binarytrees
 CXX=~/data-integrity/build/bin/clang
-SRC=fasta.c
+SRC=binarytrees.c
 CFLAG= -g -O0 -flto
 CPIFLAG = -fcps
 

@@ -10,7 +10,7 @@ all: $(SRC)
 clean:
 	rm a.out *.ll test5 test7 test8 test9 test10 normal \
 	test12 test13 test14 test15 test16 test17 test18 test19 test20 \
-	test21 test22 test23 test24 test25 test26
+	test21 test22 test23 test24 test25 test26 test11 test6
 
 sec_tests: sec_test.cpp sec_test1.cpp sec_test2.cpp
 	$(CXX) $(CFLAG) sec_test.cpp -o sec_test

@@ -27,6 +27,11 @@ void safe_write_double(double* addr) {
   printf("%.9f", *addr);
 }
 
+__attribute__((noinline)) 
+void safe_write_long(long* addr) {
+  printf("%li", *addr);
+}
+
 
 
 
