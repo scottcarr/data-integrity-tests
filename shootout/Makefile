@@ -1,5 +1,6 @@
+# working benchmarks: fasta, nbody
 CXX=~/data-integrity/build/bin/clang
-SRC=nbody.c
+SRC=fasta.c
 CFLAG= -g -O0 -flto
 CPIFLAG = -fcps
 
