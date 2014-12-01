@@ -11,7 +11,7 @@ changed so it seg faults
 */
 
 typedef struct {
-  long int val;
+  double val;
 } Key;
 
 const int N = 3;
@@ -20,32 +20,28 @@ __attribute__((annotate("sensitive"))) Key mykey;
 //Key *ptr;
 
 int main() {
-  int test = 7;
-  Key *ptr = (Key*)malloc(sizeof(Key)*N);
-  int over_write[N];
+  double test = 7.0;
+  Key *ptr = (Key*)safe_malloc(sizeof(Key)*N);
+  double over_write[N];
 
-  //cout << "addr: " << &over_write << "\n";
-  //cout << "addr: " << &over_write[3] << "\n";
-  //cout << "addr: " << &test << "\n";
-  //cout << "addr: " << &ptr << "\n";
   int j;
   
   cout << "value of test before: " << test << "\n";	
   	
   for(int i = 0; i < N+4; ++i) {
-    over_write[i] = 5;	
+    over_write[i] = 5.0;	
   }
   for(int i = 0; i < N; ++i) {
-    cin >> j;
-    ptr[i].val = j;
+    //cin >> j;
+    ptr[i].val = 1.0;
     
   }
+
   cout << "value of test after: " << test << "\n";	
 
-  cout << "value of ptr[0]: " << ptr[0].val  << "\n";  
-  cout << "value of ptr[1]: " << ptr[1].val << "\n";
-  cout << "value of ptr[2]: " << ptr[2].val << "\n";
- // cout << "should never get here\n";
+  safe_write_double(&ptr[0].val);
+  safe_write_double(&ptr[1].val);
+  safe_write_double(&ptr[2].val);
 
   return 0;
 }
