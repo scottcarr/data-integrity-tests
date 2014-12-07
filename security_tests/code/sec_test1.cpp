@@ -21,27 +21,33 @@ __attribute__((annotate("sensitive"))) Key mykey;
 
 int main() {
   double test = 7.0;
-  Key *ptr = (Key*)safe_malloc(sizeof(Key)*N);
+  //Key *ptr = (Key*)safe_malloc(sizeof(Key)*N);
+  Key ptr[N];
   double over_write[N];
 
   int j;
-  
-  cout << "value of test before: " << test << "\n";	
+
+  cout << "address of test" << &test << "\n";
+  cout << "address of over_write: " << &over_write << "\n";	
   	
-  for(int i = 0; i < N+4; ++i) {
+  for(int i = 0; i < N; ++i) {
+    ptr[i].val = 1.0;
+  }
+  for(int i = 0; i < N+12; ++i) {
     over_write[i] = 5.0;	
   }
-  for(int i = 0; i < N; ++i) {
-    //cin >> j;
-    ptr[i].val = 1.0;
-    
-  }
 
-  cout << "value of test after: " << test << "\n";	
+  cout << "value of test after(should be 7): " << test << "\n";	
 
+  cout << "value of ptr[0].val: ";
   safe_write_double(&ptr[0].val);
+  cout << "\n";
+  cout << "value of ptr[1].val: ";
   safe_write_double(&ptr[1].val);
+  cout << "\n";
+  cout << "value of ptr[2].val: ";
   safe_write_double(&ptr[2].val);
+  cout << "\n";
 
   return 0;
 }
