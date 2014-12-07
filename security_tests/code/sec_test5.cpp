@@ -28,10 +28,20 @@ int main() {
   }
 
   single_key.val = 19.0;
+  
+  cout << "value of addr (original): ";
+  safe_write_double(&addr->val);
+  cout << "\n";
+ 
+//  cout << "single_key.val: ";
+//  safe_write_double(&single_key->val);  
 
-  addr = (Key *)&single_key - 4096;
+  addr = (Key *)&single_key - sizeof(double)*7;
   addr->val = 73.0;
 
+  cout << "value of addr (altered): ";
+  safe_write_double(&addr->val);
+  cout << "\n";
 
   return 0;
 }

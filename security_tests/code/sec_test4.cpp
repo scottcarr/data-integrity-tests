@@ -21,31 +21,36 @@ __attribute__((annotate("sensitive"))) Key mykey;
 int main() {
   Key *ptr = (Key*)safe_malloc(sizeof(Key)*N);
   Key single_key; 
-  Key *addr;
+  Key *addr = (Key *)safe_malloc(sizeof(Key));
 
 
-  cout << "value of addr before: ";
+ /* cout << "value of addr before: ";
   safe_write_double(&addr->val);
   cout << "\n";
-	
-  for(int i = 0; i < N; ++i) {
+*/	
+ /* for(int i = 0; i < N; ++i) {
     ptr[i].val = 5.0;	
   }
-
-  single_key.val = 19.0;
+*/
+  addr->val = 19.0;
   
-  cout << "value of single_key: ";
-  safe_write_double(&single_key.val);
-  cout << "\n";
-
-//  addr = (Key *)&single_key + 5;
-//  addr->val = 73.0;
-
-
-  cout << "value of addr after: ";
+  cout << "value of addr: ";
   safe_write_double(&addr->val);
   cout << "\n";
 
+  addr = (Key *)&addr + 9;
+  addr->val = 73.0;
+
+
+  cout << "value of addr after (should be 73): ";
+  safe_write_double(&addr->val);
+  cout << "\n";
+
+ /* addr = (Key *)&addr - 9;
+  cout << "value of addr after (should be 19): ";
+  safe_write_double(&addr->val);
+  cout << "\n";
+  */
 
   return 0;
 }
