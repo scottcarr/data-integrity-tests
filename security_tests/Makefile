@@ -1,6 +1,6 @@
 CXX=../../build/bin/clang++
 
-all: sec_tests
+all: sec_tests run-tests
 
 clean:
 	rm a.ll sec_test*
@@ -15,5 +15,5 @@ sec_tests: code/sec_test.cpp code/sec_test1.cpp code/sec_test2.cpp code/sec_test
 	$(CXX) -g -flto -fcps code/sec_test5.cpp -o sec_test5
 	$(CXX) -g -flto -fcps code/sec_test6.cpp -o sec_test6
 
-run-tests: tests run-tests.py
+run-tests: run-tests.py
 	python run-tests.py
