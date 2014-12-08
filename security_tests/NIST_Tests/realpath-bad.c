@@ -88,7 +88,9 @@ $Header: /mnt/leo2/cvs/sabo/hist-040105/wu-ftpd/f3/realpath-bad.c,v 1.1.1.1 2004
 #include <sys/signal.h>
 #include <syslog.h>
 #include <stdio.h>
-#include "../../safe_functions.h"
+
+#include "../../nist_safe_functions.h"
+
 #ifndef MAXSYMLINKS		/* Workaround for Linux libc 4.x/5.x */
 #define MAXSYMLINKS 5
 #endif
@@ -99,7 +101,7 @@ $Header: /mnt/leo2/cvs/sabo/hist-040105/wu-ftpd/f3/realpath-bad.c,v 1.1.1.1 2004
 #endif
 */
 
-char *fb_realpath(const char *, char *);    
+char *fb_realpath(SAFE_CHAR, SAFE_CHAR);    
 
 /*
   * delay_signaling(), enable_signaling - delay signal delivery for a while
@@ -108,9 +110,49 @@ char *fb_realpath(const char *, char *);
   */
 
 
-typedef struct {
+/*typedef struct {
   char* val;
 } SAFE_CHAR;
+*/
+
+
+__attribute__((noinline))
+void* safe_malloc(size_t n) {
+  return malloc(n);
+}
+
+__attribute__((noinline))
+void safe_getchar(char* addr) {
+  int x = getchar();
+  *addr = (char) x;
+}
+
+__attribute__((noinline))
+void safe_putchar(char* adr) {
+  putchar(*adr);
+}
+
+__attribute__((noinline))
+void safe_read_double(double* addr) {
+  scanf("%lf", addr);
+}
+
+__attribute__((noinline))
+void safe_write_double(double* addr) {
+  printf("%.9f", *addr);
+}
+
+__attribute__((noinline))
+void safe_write_long(long* addr) {
+  printf("%li", *addr);
+}
+
+__attribute__((noinline))
+void safe_write_str(char* addr) {
+  printf("%s", addr);
+}
+
+
 
 
 __attribute__((annotate("sensitive"))) SAFE_CHAR a;
@@ -136,7 +178,7 @@ char *safe_strrchr(SAFE_CHAR word, char ch){
     register char *result = (char *) 0;
 
     while (1) {
-	if (word.val == ch) {
+	if (*(word.val) == ch) {
 	    result = word.val;
 	}
 	if (word.val++ == 0) {
@@ -175,7 +217,7 @@ int safe_ch_strcpy(SAFE_CHAR dest, const char *ch){
     //{ 
     //    dest.val[i] = src.val[i];
     //}
-    dest.val[0] = ch;
+    dest.val[0] = *ch;
     dest.val[1] = '\0';
     return 0;
 }
@@ -196,6 +238,18 @@ int safe_strcpy(SAFE_CHAR dest, SAFE_CHAR src){
     return 0;
 }
 
+int safe_char_strcat(SAFE_CHAR dest, char *ch){
+    int x = 0;
+    int i = 0;
+    while (dest.val[x] != '\0')
+    {
+        x++;
+    }
+    dest.val[x++] = *ch; 
+    dest.val[x] = '\0';
+    return 0;
+}
+
 int safe_ch_strcat(SAFE_CHAR dest, const char *ch){
     int x = 0;
     int i = 0;
@@ -203,7 +257,7 @@ int safe_ch_strcat(SAFE_CHAR dest, const char *ch){
     {
         x++;
     }
-    dest.val[x++] = ch; 
+    dest.val[x++] = *ch; 
     dest.val[x] = '\0';
     return 0;
 }
@@ -271,12 +325,12 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
     
     SAFE_CHAR ptr;
     SAFE_CHAR q;
-    q.val = (char *)safe_malloc(MAXPATHLEN);
+    q.val = (char *)safe_malloc(sizeof(char)*MAXPATHLEN);
 
-    fb_realpath(path.val, q.val);  /* call to fb_realpath is made */
+    fb_realpath(path, q);  /* call to fb_realpath is made */
 
     printf("safe_strlen(q) = %d\n", safe_strlen(q));
-    printf("q[MAXPATHLEN - 1] = %c\n",q.val[MAXPATHLEN - 1]);     
+    //printf("q[MAXPATHLEN - 1] = %c\n",q.val[MAXPATHLEN - 1]);     
 
     if (chroot_path.val == NULL)
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
@@ -292,7 +346,7 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
         }
         else if (q.val[1] != '\0') {
             for (ptr.val = q.val; ptr.val != '\0'; ptr.val++);
-            if (ptr.val == resolved_path.val || --ptr.val != '/') {
+            if (ptr.val == resolved_path.val || *(--ptr.val) != '/') {
                 if (safe_strlen(resolved_path) +safe_strlen(q) < MAXPATHLEN)
                     safe_strcat(resolved_path, q);
                 else            /* Avoid buffer overruns... */
@@ -300,7 +354,7 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
             }
             else {
                 if (safe_strlen(resolved_path) +safe_strlen(q) - 1 < MAXPATHLEN)
-                    safe_strcat(resolved_path, &q.val[1]);
+                    safe_char_strcat(resolved_path, &q.val[1]);
                 else            /* Avoid buffer overruns... */
                     return NULL;
             }
@@ -323,18 +377,18 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
  */
 char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
 {
-   struct stat sb;
+    struct stat sb;
     int fd, rootd, serrno;
     //char *p, *q, wbuf[MAXPATHLEN];
     SAFE_CHAR p, q, wbuf;
-    wbuf.val = (char *)safe_malloc(MAXPATHLEN);
+    wbuf.val = (char *)safe_malloc(sizeof(char)*MAXPATHLEN);
     /*int symlinks = 0;*/
     int resultcode;
 
 #ifdef HAS_NO_FCHDIR
 /* AIX Has no fchdir() so we hope the getcwd() call doesn't overrun the buffer! */
     SAFE_CHAR cwd;
-    cwd.val = (char *)safe_malloc(MAXPATHLEN + 1);
+    cwd.val = (char *)safe_malloc(sizeof(char) *(MAXPATHLEN + 1));
     SAFE_CHAR pcwd;
 #endif
 
@@ -542,7 +596,7 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
     (void) safe_strcpy(wbuf, p);  /* wbuf now contains docs.txt */
     printf("wbuf now contains");
     safe_write_str(wbuf.val);
-    printf("\n")
+    printf("\n");
     errno = 0;
 #ifdef HAVE_GETCWD
     resultcode = getcwd(resolved.val, MAXPATHLEN) == NULL ? 0 : 1; /* cur dir should be /home/misha */

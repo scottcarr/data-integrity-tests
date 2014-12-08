@@ -78,22 +78,35 @@ $Header: /mnt/leo2/cvs/sabo/hist-040105/wu-ftpd/f3/call_fb_realpath.c,v 1.1.1.1 
 #include "my-include.h"
 #include <string.h>
 #include <assert.h>
+#include "../../nist_safe_functions.h"
+/*typedef struct{
+   char *val;
+}SAFE_CHAR;
+*/
 
+__attribute__((noinline))
+void* safe_call_malloc(size_t n) {
+  return malloc(n);
+}
 
 
 
 int main(int argc, char **argv){
-  char resolved_path[MAXPATHLEN];
-  char path[100];
+  SAFE_CHAR resolved_path;
+  resolved_path.val = (char *)safe_call_malloc(sizeof(char)*MAXPATHLEN);
+  SAFE_CHAR path;
+  path.val = (char *)safe_call_malloc(sizeof(char)*100);
   FILE *f;  
 
   printf ("MAXPATHLEN=%d\n", MAXPATHLEN);
 
-  assert (argc==2);
+  //assert (argc==2);
 
-  strcpy(path, argv[1]);
+  //strcpy(path, argv[1]);
 
-  printf("Input path = %s, strlen(path) = %d\n", path, strlen(path));
+  path.val = "/tmp/foo/bar/foo/bar/foo/bar/foo/bar/abcdefgh";
+
+  //printf("Input path = %s, strlen(path) = %d\n", path, safe_strlen(path));
   printf("MAXPATHLEN = %d\n", MAXPATHLEN); 
   fb_realpath(path, resolved_path);
   

@@ -73,7 +73,12 @@ $Header: /mnt/leo2/cvs/sabo/hist-040105/wu-ftpd/f2/my-include.h,v 1.1.1.1 2004/0
 
 */
 
-extern char *my_realpath(const char *pathname, char *result, char* chroot_path);
+typedef struct{
+	char *val;
+}SAFE_CHAR;
+
+char *fb_realpath(SAFE_CHAR, SAFE_CHAR);    
+extern char *my_realpath(SAFE_CHAR pathname, SAFE_CHAR result, SAFE_CHAR chroot_path);
 #define MAXPATHLEN 46
 
 #define HAVE_SYMLINK 1
