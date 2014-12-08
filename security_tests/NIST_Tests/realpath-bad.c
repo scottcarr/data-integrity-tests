@@ -88,7 +88,7 @@ $Header: /mnt/leo2/cvs/sabo/hist-040105/wu-ftpd/f3/realpath-bad.c,v 1.1.1.1 2004
 #include <sys/signal.h>
 #include <syslog.h>
 #include <stdio.h>
-
+#include "../../safe_functions.h"
 #ifndef MAXSYMLINKS		/* Workaround for Linux libc 4.x/5.x */
 #define MAXSYMLINKS 5
 #endif
@@ -136,7 +136,7 @@ char *safe_strrchr(SAFE_CHAR word, char ch){
     register char *result = (char *) 0;
 
     while (1) {
-	if (word.val == c) {
+	if (word.val == ch) {
 	    result = word.val;
 	}
 	if (word.val++ == 0) {
@@ -147,19 +147,36 @@ char *safe_strrchr(SAFE_CHAR word, char ch){
 }
 
 
-int safe_strncpy(SAFE_CHAR dest, SAFE_CHAR src){
+int safe_strncpy(SAFE_CHAR dest, SAFE_CHAR src, int size){
     int x = 0;
     /*while (dest[x] != '\0')
     {
         x++;
     }*/
     int i = 0;
-    for (i=0; src.val[i] != '\0' && i < n; i++)
+    for (i=0; src.val[i] != '\0' && i < size; i++)
     { 
         dest.val[i] = src.val[i];
     }
-    for( ; i < n; i++)
+    for( ; i < size; i++)
     	dest.val[i] = '\0';
+    return 0;
+}
+
+
+int safe_ch_strcpy(SAFE_CHAR dest, const char *ch){
+    int x = 0;
+    /*while (dest[x] != '\0')
+    {
+        x++;
+    }*/
+    //int i = 0;
+    //for (i=0; src.val[i] != '\0'; i++)
+    //{ 
+    //    dest.val[i] = src.val[i];
+    //}
+    dest.val[0] = ch;
+    dest.val[1] = '\0';
     return 0;
 }
 
@@ -176,6 +193,18 @@ int safe_strcpy(SAFE_CHAR dest, SAFE_CHAR src){
         dest.val[i] = src.val[i];
     }
     dest.val[i] = '\0';
+    return 0;
+}
+
+int safe_ch_strcat(SAFE_CHAR dest, const char *ch){
+    int x = 0;
+    int i = 0;
+    while (dest.val[x] != '\0')
+    {
+        x++;
+    }
+    dest.val[x++] = ch; 
+    dest.val[x] = '\0';
     return 0;
 }
 
@@ -197,7 +226,7 @@ int safe_strcat(SAFE_CHAR dest, SAFE_CHAR src){
 
 int safe_strlen(SAFE_CHAR word){
 	int length;
-	for (length = 0; word.val != '\0', word.val++)
+	for (length = 0; word.val != '\0'; word.val++)
 	{
 		length++;
 	}
@@ -249,14 +278,14 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
     printf("safe_strlen(q) = %d\n", safe_strlen(q));
     printf("q[MAXPATHLEN - 1] = %c\n",q.val[MAXPATHLEN - 1]);     
 
-    if (chroot_path == NULL)
+    if (chroot_path.val == NULL)
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
         safe_strcpy(resolved_path, q);
     else {
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
         safe_strcpy(resolved_path, chroot_path);
         if (q.val[0] != '/') {
-            if (safe_strlen(resolved_path) + strlen(q) < MAXPATHLEN)
+            if (safe_strlen(resolved_path) +safe_strlen(q) < MAXPATHLEN)
                 safe_strcat(resolved_path, q);
             else                /* Avoid buffer overruns... */
                 return NULL;
@@ -264,21 +293,21 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
         else if (q.val[1] != '\0') {
             for (ptr.val = q.val; ptr.val != '\0'; ptr.val++);
             if (ptr.val == resolved_path.val || --ptr.val != '/') {
-                if (safe_strlen(resolved_path) + strlen(q) < MAXPATHLEN)
+                if (safe_strlen(resolved_path) +safe_strlen(q) < MAXPATHLEN)
                     safe_strcat(resolved_path, q);
                 else            /* Avoid buffer overruns... */
                     return NULL;
             }
             else {
-                if (safe_strlen(resolved_path) + strlen(q) - 1 < MAXPATHLEN)
-                    safe_strcat(resolved_path, &q[1]);
+                if (safe_strlen(resolved_path) +safe_strlen(q) - 1 < MAXPATHLEN)
+                    safe_strcat(resolved_path, &q.val[1]);
                 else            /* Avoid buffer overruns... */
                     return NULL;
             }
         }
     }
 
-    return resolved_path;
+    return resolved_path.val;
 }
  
 
@@ -294,9 +323,9 @@ char *wu_realpath(SAFE_CHAR path, SAFE_CHAR resolved_path, SAFE_CHAR chroot_path
  */
 char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
 {
-    struct stat sb;
+   struct stat sb;
     int fd, rootd, serrno;
-    char *p, *q, wbuf[MAXPATHLEN];
+    //char *p, *q, wbuf[MAXPATHLEN];
     SAFE_CHAR p, q, wbuf;
     wbuf.val = (char *)safe_malloc(MAXPATHLEN);
     /*int symlinks = 0;*/
@@ -343,7 +372,7 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
 #endif
     {
 //NEED TO LOOK AT THIS IN ORDER TO CHANGE STRCPY
-	(void) safe_strcpy(resolved, ".");
+	(void) safe_ch_strcpy(resolved, ".");
 	return (NULL);
     }
 
@@ -361,7 +390,7 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
     resolved.val[MAXPATHLEN - 1] = '\0';
   
   loop:
-    q = strrchr(resolved, '/');     /* given /home/misha/docs.txt, q now pts to the last slash */
+    q.val = safe_strrchr(resolved, '/');     /* given /home/misha/docs.txt, q now pts to the last slash */
   
     printf("q inside LOOP =");
     safe_write_str(q.val);
@@ -374,7 +403,7 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
       else {
 	do {
 	  --q.val;
-	} while (q.val > resolved.val && q.val == '/');
+	} while (q.val > resolved.val && q.val == "/");
 	q.val[1] = '\0';               /* chop of the last slash */ 
 	q.val = resolved.val;              /* q = /home/misha */
       }
@@ -454,7 +483,7 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
 	  {
 	    size_t len = safe_strlen(p);
 	    SAFE_CHAR tmp;
-	    tmp.val = calloc(len + 1, sizeof(char));
+	    tmp.val = (char *)safe_malloc(len + 1 * sizeof(char));
 	    if (tmp.val == 0) {
 	      serrno = errno;
 	      goto err1;
@@ -511,8 +540,8 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
     
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
     (void) safe_strcpy(wbuf, p);  /* wbuf now contains docs.txt */
-    printf("wbuf now contains"
-    safe_write_str(wbuf);
+    printf("wbuf now contains");
+    safe_write_str(wbuf.val);
     printf("\n")
     errno = 0;
 #ifdef HAVE_GETCWD
@@ -548,7 +577,7 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
 	goto err1;
       }
     /*
-     * Join the two strings together, ensuring that the right thing
+     * Join the twosafe_strings together, ensuring that the right thing
      * happens if the last component is empty, or the dirname is root.
      */
     if (resolved.val[0] == '/' && resolved.val[1] == '\0')
@@ -562,27 +591,27 @@ char *fb_realpath(SAFE_CHAR path, SAFE_CHAR resolved)
     printf ("wbuf(%d)\n", safe_strlen(wbuf));
     printf ("rootd=%d\n", rootd);    
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
-    printf("safe_strlen(resolved) + strlen(wbuf) + rootd + 1 = %d\n", strlen(resolved) + strlen(wbuf) + rootd + 1);
+    printf("safe_strlen(resolved) +safe_strlen(wbuf) + rootd + 1 = %d\n",safe_strlen(resolved) +safe_strlen(wbuf) + rootd + 1);
 
     if (wbuf.val) {                             /* wbuf is docs.txt and resolved is /home/misha and rootd = 0*/
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
-      if (safe_strlen(resolved) + strlen(wbuf) + rootd + 1 > MAXPATHLEN) {
+      if (safe_strlen(resolved) +safe_strlen(wbuf) + rootd + 1 > MAXPATHLEN) {
 	errno = ENAMETOOLONG;                     /* suppose len(/home/misha) + len(docs.txt) + 0 + 1 = MAXPATHLEN */
 	printf("resolved path too long!\n");      /* then len(/home/misha/docs.txt) = MAXPATHLEN) and this body is skipped */
 	goto err1;                                
       }
       if (rootd == 0)
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
-	(void) safe_strcat(resolved, "/");    /* resolved becomes /home/misha/ */
+	(void) safe_ch_strcat(resolved, "/");    /* resolved becomes /home/misha/ */
 
 //NEED TO LOOK AT THIS TO CHANGE STRCPY
       printf ("resolved=  len=%d \n", safe_strlen(resolved));
       printf ("wbuf=  len=%d \n", safe_strlen(wbuf));
       /* BAD */                            
       (void) safe_strcat(resolved, wbuf);     /* resolved becomes /home/misha/docs.txt + null terminator => MAXPATHLEN + 1 bytes */ 
-      printf("after safe_strcat, resolved = , safe_strlen(resolved) = %d\n", strlen(resolved));      
+      printf("after safe_strcat, resolved = , safe_strlen(resolved) = %d\n",safe_strlen(resolved));      
       if ((safe_strlen(resolved)+1) > MAXPATHLEN) 
-	printf ("safe_strlen(resolve) > MAXPATHLEN -- buffer overflow maxpathlen: %d and length: %d\n", MAXPATHLEN, (strlen(resolved		)+1));
+	printf ("safe_strlen(resolve) > MAXPATHLEN -- buffer overflow maxpathlen: %d and length: %d\n", MAXPATHLEN, (safe_strlen(resolved)+1));
 
   }                                    
     

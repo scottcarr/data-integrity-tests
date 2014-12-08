@@ -32,6 +32,10 @@ void safe_write_long(long* addr) {
   printf("%li", *addr);
 }
 
+__attribute__((noinline)) 
+void safe_write_str(char* addr) {
+  printf("%s", addr);
+}
 
 
 

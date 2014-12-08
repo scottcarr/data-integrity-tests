@@ -1,4 +1,4 @@
-CXX=../../build/bin/clang++
+CXX=../../../build/bin/clang++
 
 #all:	clean obo-bad setup_protect
 

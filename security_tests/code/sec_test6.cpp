@@ -19,10 +19,9 @@ __attribute__((annotate("sensitive"))) Key mykey;
 //Key *ptr;
 
 int main() {
-  Key addr;
   Key *addr1 = (Key*)safe_malloc(sizeof(Key));
-  addr.val = 5.0;
-  addr1 = (Key*)&addr1 + sizeof(long int);
+  addr1->val = 5.0;
+  addr1 = (Key*)addr1 + sizeof(long int);
   addr1->val = 18.0;	
 
   addr1 =  (Key*)addr1 - sizeof(long int);
