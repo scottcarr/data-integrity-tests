@@ -1,6 +1,5 @@
-BASE=~/data-integrity/build
-LIB=$BASE/lib/LLVMDataIntegrity.so
+BASE=../build
+LIB=$BASE/lib/LLVMDataConf.so
 OPT=$BASE/bin/opt
 
-#gdb -ex=run --args $OPT -load $LIB -DataIntegrityPass test.ll 
 gdb $OPT -x gdbinit

@@ -1,4 +1,4 @@
-CXX=~/data-integrity/build/bin/clang++
+CXX=~..//build/bin/clang++
 SRC=test14.cpp
 CFLAG= -g -fcps -flto
 
