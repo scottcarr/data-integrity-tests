@@ -1,0 +1,2 @@
+command alias breakpass breakpoint set --name DataConfPass::getAnalysisUsage
+breakpass

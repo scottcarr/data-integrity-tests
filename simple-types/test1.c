@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 struct object {
   struct vector3 *position, *velocity;
@@ -27,6 +28,6 @@ int main(int argc, char** argv) {
   obj.velocity = safe_ptr + 1;
   //obj.mass = safe_ptr + 2;
   foo(safe_ptr);
-  foo(obj.mass);
+  //foo(obj.mass);
   return 0;
 }

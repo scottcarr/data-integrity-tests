@@ -1,2 +1,0 @@
-command alias breakpass breakpoint set --name SimpleProtInf::propagateSensitivity
-breakpass
