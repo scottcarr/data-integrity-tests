@@ -7,9 +7,12 @@ PASS = DataConf
 SAFESTACK = ../../llvm/projects/compiler-rt/lib/safestack/safestack.cc
 INC_DIR = ../../llvm/projects/compiler-rt/lib
 CLANG = $(BASE)/bin/clang
+LLC = $(BASE)/bin/llc
 
-a.out : test1.c
-	$(CLANG) -S -emit-llvm -fsanitize=safe-stack test1.c
+
+test1.ll : test1.c
+	$(CLANG) -fsanitize=safe-stack -mllvm -dataconf test1.c
+
 
 #all : a.out
 #
@@ -32,7 +35,7 @@ a.out : test1.c
 #	rm $(SRC).ll test.ll
 #
 clean: 
-	rm a.out
+	rm a.out test1.ll before.ll after.ll
 	
 
 
