@@ -2,16 +2,17 @@ BASE = ../../buildNinja
 SRC = test1
 CC = $(BASE)/bin/clang
 OPT = $(BASE)/bin/opt
-PASSLIB = $(BASE)/lib/LLVMDataConf.so
+#PASSLIB = $(BASE)/lib/LLVMDataConf.so
 PASS = DataConf
-SAFESTACK = ../../llvm/projects/compiler-rt/lib/safestack/safestack.cc
-INC_DIR = ../../llvm/projects/compiler-rt/lib
+#SAFESTACK = ../../llvm/projects/compiler-rt/lib/safestack/safestack.cc
+#INC_DIR = ../../llvm/projects/compiler-rt/lib
 CLANG = $(BASE)/bin/clang
 LLC = $(BASE)/bin/llc
 
 
 test1.ll : test1.c
-	$(CLANG) -fsanitize=safe-stack -mllvm -dataconf test1.c
+	#$(CLANG) -fsanitize=safe-stack -mllvm -dataconf test1.c
+	$(CLANG) -mllvm -dataconf test1.c
 
 
 #all : a.out
