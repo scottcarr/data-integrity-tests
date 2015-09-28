@@ -24,16 +24,25 @@ void bar(struct vector3** x, struct vector3 **y) {
 int main(int argc, char** argv) {
   struct vector3* safe_ptr;
   int* unsafe_ptr;
+  struct object* obj_ptr;
+  struct object obj;
   safe_ptr = malloc(sizeof(struct vector3)*10);
   unsafe_ptr = malloc(30);
   printf("&unsafe_ptr: \t%p\n", &unsafe_ptr);
   printf("&safe_ptr: \t%p\n", &safe_ptr);
   printf("unsafe_ptr: \t%p\n", unsafe_ptr);
   printf("safe_ptr: \t%p\n", safe_ptr);
+  printf("&obj: \t\t%p\n", &obj);
   //safe_ptr = unsafe_ptr;
-  struct object obj;
   obj.position = safe_ptr;
   obj.velocity = safe_ptr + 1;
+  obj_ptr = &obj;
+  printf("obj.position: \t\t%p\n", obj.position);
+  printf("&obj.position: \t\t%p\n", &obj.position);
+  printf("obj.velocity: \t\t%p\n", obj.velocity);
+  printf("&obj.velocity: \t\t%p\n", &obj.velocity);
+  printf("obj_ptr: \t\t%p\n", obj_ptr);
+  printf("&obj_ptr: \t\t%p\n", &obj_ptr);
   //obj.mass = safe_ptr + 2;
   foo(safe_ptr);
   //foo(obj.mass);

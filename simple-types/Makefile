@@ -1,4 +1,4 @@
-BASE = ../../buildNinja
+BASE = ../../buildShared
 SRC = test1
 CC = $(BASE)/bin/clang
 OPT = $(BASE)/bin/opt
@@ -8,10 +8,19 @@ SAFESTACK = ../../llvm/projects/compiler-rt/lib/safestack/safestack.cc
 INC_DIR = ../../llvm/projects/compiler-rt/lib
 CLANG = $(BASE)/bin/clang
 LLC = $(BASE)/bin/llc
+#LIB = $(BASE)/lib/clang/3.8.0/lib/linux/libclang_rt.safestack-x86_64.a
 
+#all: sandbox nosandbox a.out
+all:  a.out
 
-test1.ll : test1.c
-	$(CLANG) -fsanitize=safe-stack -mllvm -dataconf test1.c
+a.out : test1.c
+	$(CLANG) -g -mllvm -dataconf -mllvm -debug-only=DataConf test1.c 
+
+#sandbox : test1.c
+#	$(CLANG) -mllvm -dataconf -mllvm -debug-only=DataConf test1.c -o sandbox
+#
+#nosandbox : test1.c
+#	$(CLANG) -mllvm -dataconf -mllvm -debug-only=DataConf -mllvm -dataconf-disable-sandbox test1.c -o nosandbox
 
 
 #all : a.out
@@ -35,7 +44,7 @@ test1.ll : test1.c
 #	rm $(SRC).ll test.ll
 #
 clean: 
-	rm a.out test1.ll before.ll after.ll
+	rm a.out test1.ll before.ll after.ll sandbox nosandbox
 	
 
 
