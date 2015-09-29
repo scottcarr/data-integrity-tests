@@ -45,6 +45,7 @@ int main(int argc, char** argv) {
   printf("&obj_ptr: \t\t%p\n", &obj_ptr);
   //obj.mass = safe_ptr + 2;
   foo(safe_ptr);
+  bar(&obj.velocity, &obj.position);
   //foo(obj.mass);
   return 0;
 }

@@ -44,7 +44,7 @@ a.out : test1.c
 #	rm $(SRC).ll test.ll
 #
 clean: 
-	rm a.out test1.ll before.ll after.ll sandbox nosandbox
+	rm a.out test1.ll before.ll after.ll 
 	
 
 
