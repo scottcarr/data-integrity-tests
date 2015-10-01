@@ -22,6 +22,7 @@ void bar(struct vector3** x, struct vector3 **y) {
 }
 
 int main(int argc, char** argv) {
+  struct vector3* sens_ptr[5];
   struct vector3* safe_ptr;
   int* unsafe_ptr;
   struct object* obj_ptr;
@@ -46,6 +47,9 @@ int main(int argc, char** argv) {
   //obj.mass = safe_ptr + 2;
   foo(safe_ptr);
   bar(&obj.velocity, &obj.position);
+  printf("&sens_ptr: \t%p\n", &sens_ptr);
+  printf("sens_ptr: \t%p\n", sens_ptr);
+  sens_ptr[6] = safe_ptr;
   //foo(obj.mass);
   return 0;
 }
