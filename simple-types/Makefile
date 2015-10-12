@@ -7,7 +7,7 @@ CLANG = $(BASE)/bin/clang
 LLC = $(BASE)/bin/llc
 
 a.out : test1.c
-	$(CLANG) -g -mllvm -dataconf -mllvm -debug-only=DataConf test1.c 
+	$(CLANG) -g -mllvm -dataconf -mllvm -debug-only=DataConf -fsanitize=dataconf test1.c 
 
 
 

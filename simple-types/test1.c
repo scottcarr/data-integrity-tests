@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
   bar(&obj.velocity, &obj.position);
   printf("&sens_ptr: \t%p\n", &sens_ptr);
   printf("sens_ptr: \t%p\n", sens_ptr);
-  sens_ptr[6] = safe_ptr;
+  //sens_ptr[6] = safe_ptr;
   //foo(obj.mass);
   return 0;
 }
