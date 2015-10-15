@@ -1,0 +1,13 @@
+CC =/home/carr27/dataconf-workspace2/buildShared/bin/clang
+
+all: test test.ll
+
+test.ll : test.c
+	$(CC) -S -emit-llvm test.c
+
+test : test.c
+	$(CC) -g -O2 -mllvm -dataconf -fsanitize=dataconf test.c -o test
+
+clean:
+	rm test test.ll
+
